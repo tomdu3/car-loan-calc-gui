@@ -1,6 +1,7 @@
-import get_info
 import calculator
+import get_info
 import scrape_maintenance
+
 
 def main():
     # get user info for fuel from RAPID API
@@ -62,3 +63,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+

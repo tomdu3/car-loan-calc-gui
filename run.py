@@ -11,7 +11,6 @@ def calculate():
         interest_rate_a = float(rate_a_entry.get())
         city_efficiency_a = float(city_a_entry.get())
         hwy_efficiency_a = float(hwy_a_entry.get())
-        weekly_city_miles = float(weekly_city_entry.get())  # Assuming you add this for Vehicle A
 
         # Retrieving values for Vehicle B
         vehicle_b_brand = vehicle_b_brand_entry.get()
@@ -20,9 +19,31 @@ def calculate():
         interest_rate_b = float(rate_b_brand_entry.get())
         city_efficiency_b = float(city_b_brand_entry.get())
         hwy_efficiency_b = float(hwy_b_brand_entry.get())
-        weekly_hwy_miles = float(weekly_hwy_entry.get())  # Assuming you add this for Vehicle B
+        weekly_city_miles = float(weekly_city_entry.get())
+        weekly_hwy_miles = float(
+            weekly_hwy_entry.get()
+        )  # Assuming you add this for Vehicle B
+        monthly_cost_car_a = get_monthly_cost(
+            vehicle_a_brand,
+            loan_a_amount,
+            term_length_a,
+            interest_rate_a,
+            city_efficiency_a,
+            hwy_efficiency_a,
+            weekly_city_miles,
+            weekly_hwy_miles,
+        )
+        monthly_cost_car_b = get_monthly_cost(
+            vehicle_a_brand,
+            loan_a_amount,
+            term_length_a,
+            interest_rate_a,
+            city_efficiency_a,
+            hwy_efficiency_a,
+            weekly_city_miles,
+            weekly_hwy_miles,
+        )
 
-        # Perform calculations here ...
         final_cost_label.config(text="Super")
 
     except ValueError:
@@ -138,7 +159,6 @@ loan_charges_label.pack()
 final_cost_label = tk.Label(right_frame, text="Final Monthly Cost")
 final_cost_label.pack()
 
-# ... Add more output labels here ...
 
 # Start the application
 root.mainloop()

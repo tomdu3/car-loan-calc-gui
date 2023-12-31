@@ -1,4 +1,5 @@
-import calculator
+ import calculator
+
 import get_info
 import scrape_maintenance
 
@@ -6,7 +7,9 @@ import scrape_maintenance
 def main():
     # get user info for fuel from RAPID API
     fuel = get_info.get_fuel_cost()
-    state = fuel['state']
+    # making Ohio a default state 
+    # state = fuel['state']
+    fuel['state'] = 'Ohio'
     fuel_prices = {
         'gasoline': float(fuel['gasoline']),
         'midgrade': float(fuel['midGrade']),

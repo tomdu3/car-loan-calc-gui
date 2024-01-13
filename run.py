@@ -19,10 +19,10 @@ def calculate():
         interest_rate_b = float(rate_b_brand_entry.get())
         city_efficiency_b = float(city_b_brand_entry.get())
         hwy_efficiency_b = float(hwy_b_brand_entry.get())
+
         weekly_city_miles = float(weekly_city_entry.get())
-        weekly_hwy_miles = float(
-            weekly_hwy_entry.get()
-        )  # Assuming you add this for Vehicle B
+        weekly_hwy_miles = float(weekly_hwy_entry.get())
+
         monthly_cost_car_a = get_monthly_cost(
             vehicle_a_brand,
             loan_a_amount,
@@ -34,12 +34,12 @@ def calculate():
             weekly_hwy_miles,
         )
         monthly_cost_car_b = get_monthly_cost(
-            vehicle_a_brand,
-            loan_a_amount,
-            term_length_a,
-            interest_rate_a,
-            city_efficiency_a,
-            hwy_efficiency_a,
+            vehicle_b_brand,
+            loan_b_amount,
+            term_length_b,
+            interest_rate_b,
+            city_efficiency_b,
+            hwy_efficiency_b,
             weekly_city_miles,
             weekly_hwy_miles,
         )
@@ -56,7 +56,14 @@ def calculate():
     # monthly_loan_charges = 350
     # final_monthly_cost = 750
 
-    # Update the labels with the calculation results
+    # Update the labels with the calculation results A
+    # maintenance_cost_label.config(text=f"Car A ${monthly_maintenance_cost}")
+    # interest_charges_label.config(text=f"Car A ${monthly_interest_charges}")
+    # loan_charges_label.config(text=f"Car A ${monthly_loan_charges}")
+    # final_cost_label.config(text=f"Car A ${final_monthly_cost}")
+    # Add more updates as needed
+
+    # Update the labels with the calculation results B
     # maintenance_cost_label.config(text=f"Car A ${monthly_maintenance_cost}")
     # interest_charges_label.config(text=f"Car A ${monthly_interest_charges}")
     # loan_charges_label.config(text=f"Car A ${monthly_loan_charges}")

@@ -45,3 +45,4 @@ def get_maintenance_cost():
 
     return maintenance_cost
 
+get_maintenance_cost()

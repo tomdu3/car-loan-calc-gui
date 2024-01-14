@@ -1,8 +1,11 @@
 import tkinter as tk
 
+from auxiliary import get_monthly_cost
+
 
 # Function to perform calculations (you need to fill this with actual logic)
 def calculate():
+
     try:
         # Retrieving values for Vehicle A
         vehicle_a_brand = vehicle_a_brand_entry.get()
@@ -11,6 +14,8 @@ def calculate():
         interest_rate_a = float(rate_a_entry.get())
         city_efficiency_a = float(city_a_entry.get())
         hwy_efficiency_a = float(hwy_a_entry.get())
+
+        print(vehicle_a_brand, loan_a_amount, term_length_a, interest_rate_a, city_efficiency_a, hwy_efficiency_a)
 
         # Retrieving values for Vehicle B
         vehicle_b_brand = vehicle_b_brand_entry.get()
@@ -23,6 +28,7 @@ def calculate():
         weekly_city_miles = float(weekly_city_entry.get())
         weekly_hwy_miles = float(weekly_hwy_entry.get())
 
+        print(vehicle_b_brand, loan_b_amount, term_length_b, interest_rate_b, city_efficiency_b, hwy_efficiency_b)
         monthly_cost_car_a = get_monthly_cost(
             vehicle_a_brand,
             loan_a_amount,
@@ -32,7 +38,8 @@ def calculate():
             hwy_efficiency_a,
             weekly_city_miles,
             weekly_hwy_miles,
-        )
+            )
+
         monthly_cost_car_b = get_monthly_cost(
             vehicle_b_brand,
             loan_b_amount,
@@ -44,32 +51,58 @@ def calculate():
             weekly_hwy_miles,
         )
 
-        final_cost_label.config(text="Super")
-
     except ValueError:
         # Handle invalid input
-        final_cost_label.config(text="Invalid input, please enter numeric values.")
+        error_label = tk.Label(right_frame, text="Error:",)
+        error_label.pack()
+        error_label.config(text="Invalid input, please enter numeric values.")
+        return
 
-    # # Dummy values for illustration
-    # monthly_maintenance_cost = 250
-    # monthly_interest_charges = 150
-    # monthly_loan_charges = 350
-    # final_monthly_cost = 750
+    # Add labels to the right frame for displaying outputs
+    maintenance_cost_label = tk.Label(right_frame, text="Monthly Maintenance Cost", state='disabled')
+    maintenance_cost_label.pack()
 
-    # Update the labels with the calculation results A
-    # maintenance_cost_label.config(text=f"Car A ${monthly_maintenance_cost}")
-    # interest_charges_label.config(text=f"Car A ${monthly_interest_charges}")
-    # loan_charges_label.config(text=f"Car A ${monthly_loan_charges}")
-    # final_cost_label.config(text=f"Car A ${final_monthly_cost}")
-    # Add more updates as needed
+    maintenance_cost_display = tk.Label(right_frame, text=f"Car A: ${monthly_cost_car_a['total_maintenance_cost']}\nCar B: ${monthly_cost_car_b['total_maintenance_cost']}"
+    )
+    maintenance_cost_display.pack()
 
-    # Update the labels with the calculation results B
-    # maintenance_cost_label.config(text=f"Car A ${monthly_maintenance_cost}")
-    # interest_charges_label.config(text=f"Car A ${monthly_interest_charges}")
-    # loan_charges_label.config(text=f"Car A ${monthly_loan_charges}")
-    # final_cost_label.config(text=f"Car A ${final_monthly_cost}")
-    # Add more updates as needed
 
+    interest_charges_label = tk.Label(right_frame, text="Monthly Interest Charges", state='disabled')
+    interest_charges_label.pack()
+    
+    interest_charges_display = tk.Label(right_frame, text=f"Car A: ${monthly_cost_car_a['interest_charges']}\nCar B: ${monthly_cost_car_b['interest_charges']}"
+    )
+    interest_charges_display.pack()
+    
+    loan_charges_label = tk.Label(right_frame, text="Monthly Loan Charges", state='disabled')
+    loan_charges_label.pack()
+
+    loan_charges_display = tk.Label(right_frame, text=f"Monthly Loan Charges\nCar A: ${monthly_cost_car_a['monthly_loan_cost']}\nCar B: ${monthly_cost_car_b['monthly_loan_cost']}"
+    )
+    loan_charges_display.pack()
+
+
+    final_cost_label = tk.Label(right_frame, text="Final Monthly Cost", state='disabled')
+    final_cost_label.pack()
+
+    final_cost_display = tk.Label(right_frame, text=f"Final Monthly Cost\nCar A: ${monthly_cost_car_a['total_monthly_cost']}\nCar B: ${monthly_cost_car_b['total_monthly_cost']}"
+    )
+    final_cost_display.pack()
+
+    most_convenient_car_cost = monthly_cost_car_a if monthly_cost_car_a["total_monthly_cost"] <  monthly_cost_car_b["total_monthly_cost"] else monthly_cost_car_b
+
+    car_to_buy_label = tk.Label(right_frame, text="Car To Buy", state='disabled')
+    car_to_buy_label.pack()
+
+    car_to_buy_display = tk.Label(right_frame, text=f"{most_convenient_car_cost['brand']}", font=('Arial', 32))
+    car_to_buy_display.pack()
+
+    # Add a label to display the total cost of ownership
+    total_cost_label = tk.Label(right_frame, text="Total Car Cost of Ownership", state='disabled')
+    total_cost_label.pack()
+
+    total_cost_display = tk.Label(right_frame, text=f"${most_convenient_car_cost['total_monthly_cost']}")
+    total_cost_display.pack()
 
 # Main application window
 root = tk.Tk()
@@ -152,20 +185,6 @@ weekly_hwy_entry.pack()
 # Add a button to perform calculation
 calculate_button = tk.Button(left_frame, text="Calculate", command=calculate)
 calculate_button.pack()
-
-# Add labels to the right frame for displaying outputs
-maintenance_cost_label = tk.Label(right_frame, text="Monthly Maintenance Cost")
-maintenance_cost_label.pack()
-
-interest_charges_label = tk.Label(right_frame, text="Monthly Interest Charges")
-interest_charges_label.pack()
-
-loan_charges_label = tk.Label(right_frame, text="Monthly Loan Charges")
-loan_charges_label.pack()
-
-final_cost_label = tk.Label(right_frame, text="Final Monthly Cost")
-final_cost_label.pack()
-
 
 # Start the application
 root.mainloop()
